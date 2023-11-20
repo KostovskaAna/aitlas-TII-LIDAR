@@ -2,6 +2,7 @@ import json
 import os
 import random
 from xml.etree import ElementTree as et
+import rasterio
 
 import cv2
 import matplotlib.patches as patches
@@ -259,7 +260,15 @@ class ObjectDetectionCocoDataset(BaseObjectDetectionDataset):
         img_data = self.data[index]
 
         # reading the images and converting them to correct size and color
-        image = image_loader(img_data["file_name"]) / 255.0
+        # image = image_loader(img_data["file_name"]) / 255.0
+
+        with rasterio.open(img_data["file_name"]) as image_tiff:
+            image = image_tiff.read()
+        if image.shape[0] == 1:
+            image = np.repeat(image, 3, axis=0)
+        image = np.transpose(image, (1, 2, 0))
+
+        # updated code read 1-channel tiff files and convert it to 3-channels
 
         # annotation file
         annotations = img_data["annotations"]

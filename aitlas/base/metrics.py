@@ -261,6 +261,10 @@ class MultiLabelRunningScore(RunningScore):
         fp = cm[:, 0, 1]
         fn = cm[:, 1, 0]
 
+        print("cm: ",cm)
+        print("cm tp", tp)
+        print("cm fp", )
+
         if total:  # sum it all if we need to calculate the totals
             tp, tn, fp, fn = tp.sum(), tn.sum(), fp.sum(), fn.sum()
 
@@ -277,7 +281,10 @@ class MultiLabelRunningScore(RunningScore):
     def iou(self):
         tp, tn, fp, fn = self.get_outcomes()
         tp_total, tn_total, fp_total, fn_total = self.get_outcomes(total=True)
-
+        print('tp', tp)
+        print('fp', fp)
+        print('fn', fn)
+        print('tp_total', tp_total)
         iou_per_class = tp / (tp + fp + fn + 1e-15)
         iou = tp_total / (tp_total + fp_total + fn_total + 1e-15)
         return {

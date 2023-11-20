@@ -11,7 +11,7 @@ from .semantic_segmentation import SemanticSegmentationDataset
 
 
 
-class TiiLIDARDatasetBinary(SemanticSegmentationDataset):
+class TiiLIDARDatasetBinaryAugmented(SemanticSegmentationDataset):
     # schema = TiiLIDARDatasetBinarySchema
     url = ""
 
@@ -40,12 +40,19 @@ class TiiLIDARDatasetBinary(SemanticSegmentationDataset):
         return self.apply_transformations(image, mask)
         
     def load_dataset(self, data_dir, csv_file):
-        vizuelization_type = data_dir.split("_")[-1]
+        is_train = 'train' in csv_file
+        vizuelization_type = 'SLRM'
         for mask_filename in os.listdir(csv_file):
             if os.path.isfile(os.path.join(csv_file, mask_filename)) and (".DS_Store" not in mask_filename):
-                mask_path = os.path.join(csv_file, mask_filename)
-                image_path = f'{data_dir}/{mask_filename.rsplit("__", 1)[0]}__{vizuelization_type}.tif'
-                self.masks.append(mask_path)
-                self.images.append(image_path)
+                if is_train:
+                    mask_path = os.path.join(csv_file, mask_filename)
+                    image_path = f'{data_dir}/{mask_filename.split("__")[0]}__{mask_filename.split("__")[1]}__{vizuelization_type}__{(mask_filename.split("segmentation_mask__")[1].split(".")[0])}.tif'
+                    self.masks.append(mask_path)
+                    self.images.append(image_path)
+                else:
+                    mask_path = os.path.join(csv_file, mask_filename)
+                    image_path = f'{data_dir}/{mask_filename.rsplit("__", 1)[0]}__{vizuelization_type}.tif'
+                    self.masks.append(mask_path)
+                    self.images.append(image_path)
 
 

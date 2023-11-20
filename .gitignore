@@ -28,18 +28,19 @@ share/python-wheels/
 MANIFEST
 
 # TII experiments
-experiments_tii
 configs
-coco_annotation_scripts
-TII_LIDAR_DATA
+_data_preprocess_scripts
+_depricated
+_get_predictions
+_patches_without_archeaology_info
+_review_predictions
+_TII_LIDAR_DATA
+_train_data_augmentations
+_val_segmentiton_annotations_updated
 inference/data
-seg_SLRM
-stuff_from_server
-experiments_jupyter_notebooks
-prepare_tii_segmentation_data
-split_test_clip.ipynb
-test_formats.ipynb
-test_tii_binary.py
+
+
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

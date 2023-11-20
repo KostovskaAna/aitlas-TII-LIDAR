@@ -539,6 +539,55 @@ class BaseModel(nn.Module, Configurable):
                 # Write the modified pixel data to the new file
                 dst.write(p)
 
+    def predict_masks_tiff_probs_binary(
+        self,
+        image_path=None,
+        label=None,
+        data_transforms=None,
+        predictions_dir = None,
+        description="running prediction for single image",
+    ):
+        """
+        Predicts using a model against for a specified image
+        """
+        # Open the TIF file
+
+        with rasterio.open(image_path) as image_tiff:
+            img_tiff_data = image_tiff.read()
+        if img_tiff_data.shape[0] == 1:
+            image = np.repeat(img_tiff_data, 3, axis=0)
+        image = np.transpose(image, (1, 2, 0))
+        # image = image*255.0
+        # image = Image.fromarray(image).convert('RGB')
+        # Convert the PIL Image to a NumPy array
+        image = np.array(image)
+        image_filename = os.path.splitext(os.path.basename(image_path))[0]
+        # load the image and apply transformations
+        original_image = copy.deepcopy(image)
+        self.model.eval()
+        if data_transforms:
+            image = data_transforms(image)
+        # check if tensor and convert to batch of size 1, otherwise convert to tensor and then to batch of size 1
+        if torch.is_tensor(image):
+            inputs = image.unsqueeze(0).to(self.device)
+        else:
+            inputs = torch.from_numpy(image).unsqueeze(0).to(self.device)
+        outputs = self(inputs)
+        # check if outputs is OrderedDict for segmentation
+        if isinstance(outputs, collections.abc.Mapping):
+            outputs = outputs["out"]
+        predicted_probs, predicted = self.get_predicted(outputs)
+        predicted_probs = list(predicted_probs.cpu().detach().numpy())
+        predicted = list(predicted.cpu().detach().numpy())
+        # save masks with probabilities 
+       
+        p = predicted_probs[0][1]
+        p = np.reshape(p, (1,) + p.shape)
+        # Create a new GeoTIFF file with the modified pixel data
+        with rasterio.open(os.path.join(predictions_dir, f"{image_filename}_{label}_segmentation_mask_probs.tif"), 'w', **image_tiff.meta) as dst:
+            # Write the modified pixel data to the new file
+            dst.write(p)
+
 
     def detect_objects(
         self,
