@@ -22,7 +22,6 @@ AiTLAS examples:
 # Installation
 
 The best way to install `aitlas`, is if you create a virtual environment and install the  requirements with `pip`. Here are the steps:
-- Go to the folder where you cloned the repo.
 - Create a virtual environment
 ```bash
 conda create -n aitlas python=3.8
@@ -31,30 +30,17 @@ conda create -n aitlas python=3.8
 ```bash
 conda activate aitlas
 ```
-- Before installing `aitlas` on Windows it is recommended to install the following packages 
-from [Unofficial Windows wheels repository](https://www.lfd.uci.edu/~gohlke/pythonlibs/):
+- Install the following packages from the installation folder:
 ```bash
 pip install GDAL-3.4.1-cp38-cp38-win_amd64.whl 
 pip install Fiona-1.8.20-cp38-cp38-win_amd64.whl
 pip install rasterio-1.2.10-cp38-cp38-win_amd64.whl
+pip install aitlas-0.0.1-py3-none-any.whl 
 ```
-- Install the requirements
+- Enable the use of the `aitlas` virtual environment in Jupyter notebooks
 ```bash
-pip install -r requirements.txt
+python -m ipykernel install --name aitlas 
 ```
-And, that's it, you can start using `aitlas`!
-```bash
-python -m aitlas.run configs/example_config.json
-```
-If you want to use `aitlas` as a package run
-```bash
-pip install .
-```
-in the folder where you cloned the repo.
-
----
-
-**Note:** You will have to download the datasets from their respective source. You can find a link for each dataset in the respective dataset class in `aitlas/datasets/` or use the **AiTLAS Semantic Data Catalog**
 
 ---
 # Citation
@@ -66,22 +52,7 @@ For attribution in academic contexts, please cite this [work](https://arxiv.org/
       year={2022},
       journal={arXiv preprint arXiv:2201.08789},
 }
-```
-# The AiTLAS Ecosystem
 
-
-## AiTLAS: Benchmark Arena
-
-An open-source benchmark framework for evaluating state-of-the-art deep learning approaches for image classification in Earth Observation (EO). To this end, it presents a comprehensive comparative analysis of more than 500 models derived from ten different state-of-the-art architectures and compare them to a variety of multi-class and multi-label classification tasks from 22 datasets with different sizes and properties. In addition to models trained entirely on these datasets, it employs benchmark models trained in the context of transfer learning, leveraging pre-trained model variants, as it is typically performed in practice. All presented approaches are general and can be easily extended to many other remote sensing image classification tasks.To ensure reproducibility and facilitate better usability and further developments, all of the experimental resources including the trained models, model configurations and processing details of the datasets (with their corresponding splits used for training and evaluating the models) are available on this repository.
-
-**repo**: [https://github.com/biasvariancelabs/aitlas-arena](https://github.com/biasvariancelabs/aitlas-arena)
-
-**paper**: [Current Trends in Deep Learning for Earth Observation: An Open-source Benchmark Arena for Image Classification](https://www.sciencedirect.com/science/article/pii/S0924271623000205) , ISPRS Journal of Photogrammetry and Remote Sensing, Vol.197, pp 18-35
-
-
-## AiTLAS Semantic Data Catalog of Earth Observation (EO) datasets (beta)
-
-A novel semantic data catalog of numerous EO datasets, pertaining to various different EO and ML tasks. The catalog, that includes properties of different datasets and provides further details for their use, is available [here](http://eodata.bvlabs.ai)
 
 
 
