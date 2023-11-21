@@ -38,6 +38,7 @@ _TII_LIDAR_DATA
 _train_data_augmentations
 _val_segmentiton_annotations_updated
 inference/data
+_train
 
 
 
