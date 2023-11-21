@@ -1,7 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning) 
-warnings.filterwarnings("ignore", category=DeprecationWarning) 
-
 import os
 from aitlas.transforms import ResizeV2
 from aitlas.transforms import Transpose
