@@ -35,6 +35,10 @@ eo-learn-core>=0.10.0
 ttach
 imagecodecs
 ipykernel
+pycocotools
+ipywidgets
+notebook
+
 
 
 

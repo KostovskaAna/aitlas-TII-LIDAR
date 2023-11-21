@@ -154,6 +154,4 @@ data/
 /data
 /scripts
 
-# ignore experiment folder
-experiment/
-experiments/
+
