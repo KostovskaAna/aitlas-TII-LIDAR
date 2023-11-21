@@ -28,6 +28,7 @@ share/python-wheels/
 MANIFEST
 
 # TII experiments
+.vscode/
 configs
 _data_preprocess_scripts
 _depricated
@@ -66,6 +67,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+
 
 # Translations
 *.mo
